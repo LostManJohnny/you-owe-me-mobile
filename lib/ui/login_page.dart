@@ -16,6 +16,9 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   late final TextEditingController _emailCtrl;
   late final TextEditingController _pwCtrl;
+  late final TextEditingController _firstNameCtrl;
+  late final TextEditingController _lastNameCtrl;
+  late final TextEditingController _phoneNumberCtrl;
 
   @override
   void initState() {
@@ -23,6 +26,9 @@ class _LoginPageState extends State<LoginPage> {
     final s = widget.bloc.state;
     _emailCtrl = TextEditingController(text: s.email);
     _pwCtrl = TextEditingController(text: s.password);
+    _firstNameCtrl = TextEditingController(text: s.firstName);
+    _lastNameCtrl = TextEditingController(text: s.lastName);
+    _phoneNumberCtrl = TextEditingController(text: s.phone);
   }
 
   @override
@@ -83,6 +89,42 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       autofillHints: const [AutofillHints.password],
                     ),
+                    if (state.mode == AuthFormMode.signUp)
+                      ...[
+                        const SizedBox(height: 12),
+                        TextField(
+                          controller: _firstNameCtrl,
+                          onChanged: (v) => widget.bloc.add(FirstNameChanged(v)),
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            labelText: 'First Name',
+                            border: OutlineInputBorder(),
+                          ),
+                          autofillHints: const [AutofillHints.name],
+                        ),
+                        const SizedBox(height: 12),
+                        TextField(
+                          controller: _lastNameCtrl,
+                          onChanged: (v) => widget.bloc.add(LastNameChanged(v)),
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            labelText: 'Last Name',
+                            border: OutlineInputBorder(),
+                          ),
+                          autofillHints: const [AutofillHints.familyName],
+                        ),
+                        const SizedBox(height: 12),
+                        TextField(
+                          controller: _phoneNumberCtrl,
+                          onChanged: (v) => widget.bloc.add(PhoneChanged(v)),
+                          obscureText: true,
+                          decoration: const InputDecoration(
+                            labelText: 'Phone',
+                            border: OutlineInputBorder(),
+                          ),
+                          autofillHints: const [AutofillHints.telephoneNumber],
+                        ),
+                      ],
                     const SizedBox(height: 16),
                     SizedBox(
                       width: double.infinity,

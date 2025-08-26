@@ -34,6 +34,33 @@ class PasswordChanged extends AuthEvent {
   List<Object?> get props => [password];
 }
 
+class FirstNameChanged extends AuthEvent{
+  final String firstName;
+
+  const FirstNameChanged(this.firstName);
+
+  @override
+  List<Object?> get props => [firstName];
+}
+
+class LastNameChanged extends AuthEvent{
+  final String lastName;
+
+  const LastNameChanged(this.lastName);
+
+  @override
+  List<Object?> get props => [lastName];
+}
+
+class PhoneChanged extends AuthEvent{
+  final String phone;
+
+  const PhoneChanged(this.phone);
+
+  @override
+  List<Object?> get props => [phone];
+}
+
 class ToggleMode extends AuthEvent {
   const ToggleMode();
 }

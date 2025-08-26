@@ -8,6 +8,9 @@ class AuthState extends Equatable {
   final AuthStatus status;
   final String email;
   final String password;
+  final String firstName;
+  final String lastName;
+  final String phone;
   final AuthFormMode mode;
   final String? errorMessage;
   final Object? user;
@@ -16,6 +19,9 @@ class AuthState extends Equatable {
     this.status = AuthStatus.unknown,
     this.email = '',
     this.password = '',
+    this.firstName = '',
+    this.lastName = '',
+    this.phone = '',
     this.mode = AuthFormMode.signIn,
     this.errorMessage,
     this.user,
