@@ -43,3 +43,48 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Flutter/Dart related
+.packages
+.flutter-versions
+.melos_tool/
+
+# Build outputs
+build/
+coverage/
+android/app/debug
+android/app/profile
+android/app/release
+
+# iOS/Xcode
+ios/Flutter/Flutter.framework
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/ephemeral/
+ios/Pods/
+ios/.symlinks/
+ios/Runner.xcworkspace/
+ios/Podfile.lock
+
+# macOS
+macos/Flutter/GeneratedPluginRegistrant.swift
+macos/Flutter/ephemeral/
+macos/Pods/
+macos/Podfile.lock
+
+# Windows
+windows/flutter/ephemeral/
+
+# Linux
+linux/flutter/ephemeral/
+
+# Web
+lib/generated_plugin_registrant.dart
+
+# VS Code
+.vscode/
+.history/
+
+# Others
+pubspec.lock
+!.dart_tool/package_config.json  # Keep this if needed
