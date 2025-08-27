@@ -11,6 +11,7 @@ class AuthState extends Equatable {
   final String firstName;
   final String lastName;
   final String phone;
+  final String username;
   final AuthFormMode mode;
   final String? errorMessage;
   final Object? user;
@@ -22,17 +23,30 @@ class AuthState extends Equatable {
     this.firstName = '',
     this.lastName = '',
     this.phone = '',
+    this.username = '',
     this.mode = AuthFormMode.signIn,
     this.errorMessage,
     this.user,
   });
 
-  bool get canSubmit => email.trim().contains('@') && password.trim().length >= 6;
+  bool get canSubmit =>
+      email.trim().contains('@') &&
+      password.trim().length >= 6 &&
+      (mode == AuthFormMode.signIn ||
+          (firstName.trim().isNotEmpty &&
+              lastName.trim().isNotEmpty &&
+              phone.trim().isNotEmpty &&
+              username.trim().isNotEmpty));
 
   AuthState copyWith({
     AuthStatus? status,
     String? email,
     String? password,
+    String? firstName,
+    String? lastName,
+    String? userName,
+    String? phone,
+    String? username,
     AuthFormMode? mode,
     String? errorMessage,
     Object? user,

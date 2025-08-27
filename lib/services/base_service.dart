@@ -1,9 +1,7 @@
-// services/base_service.dart
-import 'package:you_owe_us/app_config.dart';
+import 'package:you_owe_us/services/base_web_service.dart';
 
-class BaseService {
-  final AppConfig config;
-  BaseService(this.config);
+import '../di.dart';
 
-  String get baseUrl => config.endpointUrl();
+class BaseService{
+  BaseWebService webService = c<BaseWebService>();
 }

@@ -18,7 +18,7 @@ class HomePage extends StatelessWidget {
           IconButton(
             tooltip: 'Sign out',
             icon: const Icon(Icons.logout),
-            onPressed: () => bloc.add(const SignOutRequested()),
+            onPressed: () => bloc.add(AuthEvent.signOutRequested()),
           ),
         ],
       ),
