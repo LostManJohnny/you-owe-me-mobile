@@ -11,7 +11,7 @@ class AuthService {
 
   Stream<User?> authStateChanges() => _auth.authStateChanges();
 
-  Future<UserProfile> signIn({
+  Future<UserProfile?> signIn({
     required String email,
     required String password,
   }) async {
@@ -32,7 +32,9 @@ class AuthService {
       email: email,
       password: password,
     );
-    return userProfile.copyWith(authKey: creds.user?.uid);
+    userProfile = userProfile.copyWith(authKey: creds.user?.uid);
+    userProfileService.saveUserProfile(userProfile);
+    return userProfile;
   }
 
   Future<void> sendPasswordResetEmail({required String email}) => _auth.sendPasswordResetEmail(email: email);

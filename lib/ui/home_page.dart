@@ -1,27 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:you_owe_us/navigation/common_scaffold.dart';
 import '../bloc/auth/auth_bloc.dart';
 import '../bloc/auth/auth_event.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({super.key, required this.bloc});
-
-  final AuthBloc bloc;
+  const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final user = FirebaseAuth.instance.currentUser;
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Home'),
-        actions: [
-          IconButton(
-            tooltip: 'Sign out',
-            icon: const Icon(Icons.logout),
-            onPressed: () => bloc.add(AuthEvent.signOutRequested()),
-          ),
-        ],
-      ),
+    final email = context.select<AuthBloc, String?>((b) => b.state.userProfile?.email);
+
+    return CommonScaffold(
+      title: 'Home',
+      actions: [
+        IconButton(
+          tooltip: 'Sign out',
+          icon: const Icon(Icons.logout),
+          onPressed: () => context.read<AuthBloc>().add(const AuthEvent.signOutRequested()),
+        ),
+      ],
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -30,7 +28,7 @@ class HomePage extends StatelessWidget {
             const SizedBox(height: 12),
             const Text('Signed in as'),
             const SizedBox(height: 4),
-            Text(user?.email ?? '(no email)'),
+            Text(email ?? '(no email)'),
           ],
         ),
       ),

@@ -7,6 +7,9 @@ part 'user_profile.g.dart';
 @freezed
 abstract class UserProfile with _$UserProfile {
   const factory UserProfile({
+    @JsonKey(name: 'id') String? id,
+    @JsonKey(name: 'url_safe_key') String? urlSafeKey,
+    @Default(0) @JsonKey(name: 'version') int version,
     @JsonKey(name: 'first_name') required String firstName,
     @JsonKey(name: 'last_name') required String lastName,
     @JsonKey(name: 'email') required String email,

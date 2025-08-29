@@ -56,7 +56,7 @@ class AppRouter {
       GoRoute(
         name: 'home',
         path: '/home',
-        builder: (context, state) => HomePage(bloc: context.read<AuthBloc>()),
+        builder: (context, state) => HomePage(),
       ),
     ],
   );

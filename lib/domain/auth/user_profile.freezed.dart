@@ -15,6 +15,12 @@ T _$identity<T>(T value) => value;
 
 /// @nodoc
 mixin _$UserProfile {
+  @JsonKey(name: 'id')
+  String? get id;
+  @JsonKey(name: 'url_safe_key')
+  String? get urlSafeKey;
+  @JsonKey(name: 'version')
+  int get version;
   @JsonKey(name: 'first_name')
   String get firstName;
   @JsonKey(name: 'last_name')
@@ -43,6 +49,10 @@ mixin _$UserProfile {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is UserProfile &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.urlSafeKey, urlSafeKey) ||
+                other.urlSafeKey == urlSafeKey) &&
+            (identical(other.version, version) || other.version == version) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
@@ -56,12 +66,12 @@ mixin _$UserProfile {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, firstName, lastName, email, phone, username, authKey);
+  int get hashCode => Object.hash(runtimeType, id, urlSafeKey, version,
+      firstName, lastName, email, phone, username, authKey);
 
   @override
   String toString() {
-    return 'UserProfile(firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, username: $username, authKey: $authKey)';
+    return 'UserProfile(id: $id, urlSafeKey: $urlSafeKey, version: $version, firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, username: $username, authKey: $authKey)';
   }
 }
 
@@ -72,7 +82,10 @@ abstract mixin class $UserProfileCopyWith<$Res> {
       _$UserProfileCopyWithImpl;
   @useResult
   $Res call(
-      {@JsonKey(name: 'first_name') String firstName,
+      {@JsonKey(name: 'id') String? id,
+      @JsonKey(name: 'url_safe_key') String? urlSafeKey,
+      @JsonKey(name: 'version') int version,
+      @JsonKey(name: 'first_name') String firstName,
       @JsonKey(name: 'last_name') String lastName,
       @JsonKey(name: 'email') String email,
       @JsonKey(name: 'phone_number') String? phone,
@@ -92,6 +105,9 @@ class _$UserProfileCopyWithImpl<$Res> implements $UserProfileCopyWith<$Res> {
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = freezed,
+    Object? urlSafeKey = freezed,
+    Object? version = null,
     Object? firstName = null,
     Object? lastName = null,
     Object? email = null,
@@ -100,6 +116,18 @@ class _$UserProfileCopyWithImpl<$Res> implements $UserProfileCopyWith<$Res> {
     Object? authKey = freezed,
   }) {
     return _then(_self.copyWith(
+      id: freezed == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      urlSafeKey: freezed == urlSafeKey
+          ? _self.urlSafeKey
+          : urlSafeKey // ignore: cast_nullable_to_non_nullable
+              as String?,
+      version: null == version
+          ? _self.version
+          : version // ignore: cast_nullable_to_non_nullable
+              as int,
       firstName: null == firstName
           ? _self.firstName
           : firstName // ignore: cast_nullable_to_non_nullable
@@ -132,7 +160,10 @@ class _$UserProfileCopyWithImpl<$Res> implements $UserProfileCopyWith<$Res> {
 @JsonSerializable()
 class _UserProfile implements UserProfile {
   const _UserProfile(
-      {@JsonKey(name: 'first_name') required this.firstName,
+      {@JsonKey(name: 'id') this.id,
+      @JsonKey(name: 'url_safe_key') this.urlSafeKey,
+      @JsonKey(name: 'version') this.version = 0,
+      @JsonKey(name: 'first_name') required this.firstName,
       @JsonKey(name: 'last_name') required this.lastName,
       @JsonKey(name: 'email') required this.email,
       @JsonKey(name: 'phone_number') this.phone,
@@ -141,6 +172,15 @@ class _UserProfile implements UserProfile {
   factory _UserProfile.fromJson(Map<String, dynamic> json) =>
       _$UserProfileFromJson(json);
 
+  @override
+  @JsonKey(name: 'id')
+  final String? id;
+  @override
+  @JsonKey(name: 'url_safe_key')
+  final String? urlSafeKey;
+  @override
+  @JsonKey(name: 'version')
+  final int version;
   @override
   @JsonKey(name: 'first_name')
   final String firstName;
@@ -182,6 +222,10 @@ class _UserProfile implements UserProfile {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _UserProfile &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.urlSafeKey, urlSafeKey) ||
+                other.urlSafeKey == urlSafeKey) &&
+            (identical(other.version, version) || other.version == version) &&
             (identical(other.firstName, firstName) ||
                 other.firstName == firstName) &&
             (identical(other.lastName, lastName) ||
@@ -195,12 +239,12 @@ class _UserProfile implements UserProfile {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, firstName, lastName, email, phone, username, authKey);
+  int get hashCode => Object.hash(runtimeType, id, urlSafeKey, version,
+      firstName, lastName, email, phone, username, authKey);
 
   @override
   String toString() {
-    return 'UserProfile(firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, username: $username, authKey: $authKey)';
+    return 'UserProfile(id: $id, urlSafeKey: $urlSafeKey, version: $version, firstName: $firstName, lastName: $lastName, email: $email, phone: $phone, username: $username, authKey: $authKey)';
   }
 }
 
@@ -213,7 +257,10 @@ abstract mixin class _$UserProfileCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'first_name') String firstName,
+      {@JsonKey(name: 'id') String? id,
+      @JsonKey(name: 'url_safe_key') String? urlSafeKey,
+      @JsonKey(name: 'version') int version,
+      @JsonKey(name: 'first_name') String firstName,
       @JsonKey(name: 'last_name') String lastName,
       @JsonKey(name: 'email') String email,
       @JsonKey(name: 'phone_number') String? phone,
@@ -233,6 +280,9 @@ class __$UserProfileCopyWithImpl<$Res> implements _$UserProfileCopyWith<$Res> {
   @override
   @pragma('vm:prefer-inline')
   $Res call({
+    Object? id = freezed,
+    Object? urlSafeKey = freezed,
+    Object? version = null,
     Object? firstName = null,
     Object? lastName = null,
     Object? email = null,
@@ -241,6 +291,18 @@ class __$UserProfileCopyWithImpl<$Res> implements _$UserProfileCopyWith<$Res> {
     Object? authKey = freezed,
   }) {
     return _then(_UserProfile(
+      id: freezed == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      urlSafeKey: freezed == urlSafeKey
+          ? _self.urlSafeKey
+          : urlSafeKey // ignore: cast_nullable_to_non_nullable
+              as String?,
+      version: null == version
+          ? _self.version
+          : version // ignore: cast_nullable_to_non_nullable
+              as int,
       firstName: null == firstName
           ? _self.firstName
           : firstName // ignore: cast_nullable_to_non_nullable

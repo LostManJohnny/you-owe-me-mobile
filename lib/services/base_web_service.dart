@@ -10,7 +10,7 @@ import 'package:you_owe_us/app_config.dart';
 
 class BaseWebService {
   final AppConfig config;
-  final GoRouter router; // <-- injected
+  final GoRouter router;
   static const _defaultTimeOut = 60;
 
   BaseWebService(this.config, this.router);
@@ -50,13 +50,8 @@ class BaseWebService {
     return result.body;
   }
 
-  Future<dynamic> postJson(
-    String urlString, {
-    Object? body,
-    int timeoutSeconds = _defaultTimeOut,
-    int retries = 1,
-    Map<String, String>? extraHeaders,
-  }) async {
+  Future<dynamic> postJson(String urlString,
+      {Object? body, int timeoutSeconds = _defaultTimeOut, int retries = 1, Map<String, String>? extraHeaders}) async {
     final uri = Uri.parse(Uri.encodeFull('$baseUrl/$urlString'));
     final headers = {
       ...await getHeaders(),
@@ -107,13 +102,8 @@ class BaseWebService {
     return result.body;
   }
 
-  Future<dynamic> putJson(
-    String urlString, {
-    Object? body,
-    int timeoutSeconds = _defaultTimeOut,
-    int retries = 1,
-    Map<String, String>? extraHeaders,
-  }) async {
+  Future<dynamic> putJson(String urlString,
+      {Object? body, int timeoutSeconds = _defaultTimeOut, int retries = 1, Map<String, String>? extraHeaders}) async {
     final uri = Uri.parse(Uri.encodeFull('$baseUrl/$urlString'));
     final headers = {
       ...await getHeaders(),
@@ -162,13 +152,8 @@ class BaseWebService {
     return result.body;
   }
 
-  Future<dynamic> deleteJson(
-    String urlString, {
-    Object? body, // some APIs accept a body with DELETE
-    int timeoutSeconds = _defaultTimeOut,
-    int retries = 1,
-    Map<String, String>? extraHeaders,
-  }) async {
+  Future<dynamic> deleteJson(String urlString,
+      {Object? body, int timeoutSeconds = _defaultTimeOut, int retries = 1, Map<String, String>? extraHeaders}) async {
     final uri = Uri.parse(Uri.encodeFull('$baseUrl/$urlString'));
     final headers = {
       ...await getHeaders(),
@@ -229,9 +214,17 @@ class BaseWebService {
       router.goNamed('login', extra: {'clientOutOfDate': true});
       return;
     }
+
     final ok = result.statusCode >= 200 && result.statusCode <= 299;
     if (!ok) {
-      throw HttpException(result.reasonPhrase ?? '', uri: uri != null ? Uri.parse(uri) : null);
+      // 🔎 Print/throw response body so you can read FastAPI's error details
+      if (kDebugMode) {
+        print('HTTP ${result.statusCode} ${result.reasonPhrase}\n${result.body}');
+      }
+      throw HttpException(
+        'HTTP ${result.statusCode}: ${result.body}', // include body
+        uri: uri != null ? Uri.parse(uri) : null,
+      );
     }
   }
 

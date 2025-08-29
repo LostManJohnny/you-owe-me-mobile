@@ -9,32 +9,40 @@ import 'package:you_owe_us/services/base_web_service.dart';
 import 'package:you_owe_us/services/user_profile_service.dart';
 import 'bloc/auth/auth_bloc.dart';
 
-final sl = GetIt.instance; // service locator
-T c<T extends Object>() => sl<T>(); // shorthand resolver
+final sl = GetIt.instance;
+
+T c<T extends Object>() => sl<T>();
 
 Future<void> setupDI(AppConfig config) async {
-  // Core
+  // region Core
   sl.registerSingleton<AppConfig>(config);
+  // endregion
 
-  // Auth (no router/BaseService dependency)
-  sl.registerLazySingleton<AuthService>(() => AuthService(c<UserProfileService>()));
-
-  // Router (depends ONLY on the auth state stream)
+  // region Router
   sl.registerLazySingleton<AppRouter>(
     () => AppRouter(FirebaseAuth.instance.authStateChanges()),
   );
-
-  // Expose GoRouter directly for convenience
   sl.registerLazySingleton<GoRouter>(() => sl<AppRouter>().router);
+  // endregion
 
-  // HTTP base service(s) that need GoRouter for 403 handling
+  // region Web layer
   sl.registerLazySingleton<BaseWebService>(
     () => BaseWebService(c<AppConfig>(), c<GoRouter>()),
   );
+  // endregion
 
-  // Services
-  sl.registerLazySingleton<UserProfileService>(() => UserProfileService());
+  // region Domain services
+  sl.registerLazySingleton<UserProfileService>(
+    () => UserProfileService(),
+  );
 
-  // Blocs
+  sl.registerLazySingleton<AuthService>(
+    () => AuthService(c<UserProfileService>()),
+  );
+
+  // endregion
+
+  // region Bloc
   sl.registerFactory<AuthBloc>(() => AuthBloc(c<AuthService>()));
+  // endregion
 }
