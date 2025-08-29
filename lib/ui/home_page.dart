@@ -15,22 +15,23 @@ class HomePage extends StatelessWidget {
       title: 'Home',
       actions: [
         IconButton(
-          tooltip: 'Sign out',
           icon: const Icon(Icons.logout),
           onPressed: () => context.read<AuthBloc>().add(const AuthEvent.signOutRequested()),
         ),
       ],
       body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Icon(Icons.verified_user, size: 64),
-            const SizedBox(height: 12),
-            const Text('Signed in as'),
-            const SizedBox(height: 4),
-            Text(email ?? '(no email)'),
-          ],
-        ),
+        child: email == null
+            ? const CircularProgressIndicator()
+            : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.verified_user, size: 64),
+                  const SizedBox(height: 12),
+                  const Text('Signed in as'),
+                  const SizedBox(height: 4),
+                  Text(email),
+                ],
+              ),
       ),
     );
   }
